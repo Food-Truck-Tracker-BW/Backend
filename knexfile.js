@@ -1,44 +1,62 @@
-// Update with your config settings.
+const localPg = {
+  host: 'localhost',
+  port: 5432,
+  user: 'postgres',
+  database: 'foodTruckTracker',
+};
+
+const pgUser = process.env.PG_USER || 'postgres';
+const pgDb = process.env.PG_DB || 'foodTruckTracker';
+const testDb = 'ftt-test';
+
+const prodConnection = `postgres://${pgUser}:pjwise@localhost/${pgDb}`;
+const testConnection = `postgres://${pgUser}:pjwise@localhost/${testDb}`;
 
 module.exports = {
 
   development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './dev.sqlite3'
-    }
-  },
-
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+    client: 'pg',
+    connection: prodConnection,
+    migrations: {
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/seeds',
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
+  },
+
+  testing: {
+    client: 'pg',
+    connection: testConnection,
     migrations: {
-      tableName: 'knex_migrations'
-    }
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/testSeeds',
+    },
+    pool: {
+      min: 2,
+      max: 10,
+    },
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    migrations: {
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/seeds',
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
-  }
+  },
 
 };

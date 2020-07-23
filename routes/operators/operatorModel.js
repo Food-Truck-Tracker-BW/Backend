@@ -6,6 +6,8 @@ module.exports = {
     findBy,
     findById,
     addTruck,
+    findTrucksById,
+    removeOperator,
 };
 
 function find () {
@@ -26,4 +28,26 @@ function findById (id) {
     return db('operators')
         .where({ id })
         .first();
+}
+
+function findTrucksById (id) {
+    return db('trucks')
+        .where({ id })
+        .first();
+}
+
+function addTruck (truck) {
+    const [id] = await db('trucks').insert(truck, 'id');
+    return findTrucksById(id);
+}
+
+async function removeOperator (id) {
+    let operator = await findById(id)
+    return db('operators').where({ id })
+        .del()
+        .then(res => {
+            if (res) {
+                return operator
+            } else return null;
+        })
 }

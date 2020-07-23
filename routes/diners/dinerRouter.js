@@ -11,4 +11,15 @@ router.get('/', restricted, (req, res) => {
         .catch(err => res.send(err));
 });
 
+//delete
+router.delete('/:id', restricted.restrictedOperator, validateId, (req, res) => {
+    Diners.removeDiner(req.params.id)
+        .then(diner => {
+            if (diner) {
+                res.status(200).json({ diner: diner })
+            } else res.status(404).json({ message: 'could not find diner with that id' })
+        })
+        .catch(err => res.status(500).json({ message: 'failed to delete diner', err: err }))
+})
+
 module.exports = router;

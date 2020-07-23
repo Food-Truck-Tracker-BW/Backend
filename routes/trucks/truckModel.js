@@ -8,6 +8,8 @@ module.exports = {
     findMenus,
     findLocation,
     addMenu,
+    updateTruck,
+    removeTruck
 };
 
 function find () {
@@ -49,5 +51,24 @@ function addMenu (items, truckId) {
 
 function findLocation (id) {
     return db('currentLocation').where({ truck_id: id })
+}
+
+function updateTruck (id, updatedTruck) {
+    return db('trucks').where({ id })
+        .update(updatedTruck)
+        .then(() => {
+            return findById(id)
+        })
+}
+
+async function removeTruck (id) {
+    let truck = await findById(id)
+    return db('trucks').where({ id })
+        .del()
+        .then(res => {
+            if (res) {
+                return truck
+            } else return null;
+        })
 }
 

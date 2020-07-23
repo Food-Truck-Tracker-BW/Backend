@@ -5,6 +5,7 @@ module.exports = {
     find,
     findBy,
     findById,
+    removeDiner,
 };
 
 function find () {
@@ -25,6 +26,17 @@ function findById (id) {
     return db('diners')
         .where({ id })
         .first();
+}
+
+async function removeDiner (id) {
+    let diner = await findById(id)
+    return db('diners').where({ id })
+        .del()
+        .then(res => {
+            if (res) {
+                return diner
+            } else return null;
+        })
 }
 
 // function addFavorites (id) {

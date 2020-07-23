@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "BE for Food Truck Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Food-Truck-Tracker-BW/Backend.git"
+  },
+  "author": "PJ Wise",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Food-Truck-Tracker-BW/Backend/issues"
+  },
+  "homepage": "https://github.com/Food-Truck-Tracker-BW/Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "knex": "^0.21.2",
+    "sqlite3": "^5.0.0"
+  }
+}

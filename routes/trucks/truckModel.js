@@ -13,6 +13,7 @@ module.exports = {
     updateTruck,
     removeTruck,
     findWithinRad,
+    findByCuisine,
 };
 
 function find () {
@@ -82,5 +83,9 @@ function findWithinRad (lat, lng, rad) {
         )
         .where(st.dwithin("location", st.geography(st.makePoint(lng, lat)), rad));
     //rad = meters
+}
+
+function findByCuisine (cuisine) {
+    return db('trucks').where({ cuisine })
 }
 

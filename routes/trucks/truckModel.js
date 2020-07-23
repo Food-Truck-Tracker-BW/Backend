@@ -1,4 +1,6 @@
 const db = require('../../data/dbConfig.js');
+const knexPostgis = require('knex-postgis');
+const st = knexPostgis(db);
 
 module.exports = {
     add,
@@ -9,7 +11,8 @@ module.exports = {
     findLocation,
     addMenu,
     updateTruck,
-    removeTruck
+    removeTruck,
+    findWithinRad,
 };
 
 function find () {
@@ -70,5 +73,14 @@ async function removeTruck (id) {
                 return truck
             } else return null;
         })
+}
+
+function findWithinRad (lat, lng, rad) {
+    return db("trucks")
+        .select(
+            st.distance("location", st.geography(st.makePoint(lng, lat))).as("distanceAway")
+        )
+        .where(st.dwithin("location", st.geography(st.makePoint(lng, lat)), rad));
+    //rad = meters
 }
 

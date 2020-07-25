@@ -2,10 +2,9 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const Operators = require('../operators/operatorModel.js');
-const Diners = require('../diners/dinerModel.js');
+const Users = require('../users/userModel.js');
 
-const secrets = require('../config/secrets.js');
+const secrets = require('../../config/secrets');
 const e = require('express');
 
 router.post('/register', validateUser, (req, res) => {
@@ -13,45 +12,21 @@ router.post('/register', validateUser, (req, res) => {
     const hash = bcrypt.hashSync(user.password, 14);
     user.password = hash;
 
-    if (user.isOperator) {
-        Operators.add(user)
-            .then(saved => {
-                res.status(201).json(saved);
-            })
-            .catch(error => {
-                res.status(500).json(error);
-            });
-    } else {
-        Diners.add(user)
-            .then(saved => {
-                res.status(201).json(saved);
-            })
-            .catch(error => {
-                res.status(500).json(error);
-            });
-    }
+    Users.add(user)
+        .then(saved => {
+            res.status(201).json(saved);
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+
 });
 
 router.post('/login', (req, res) => {
     let { username, password } = req.body;
-    Diners.findBy({ username })
+    Users.findBy({ username })
         .first()
         .then(user => {
-            if (!user) {
-                Operators.findBy({ username })
-                    .first()
-                    .then(user => {
-                        if (user && bcrypt.compareSync(password, user.password)) {
-                            const token = generateToken(user);
-                            res.status(200).json({
-                                username: user.username,
-                                token: token
-                            });
-                        } else {
-                            res.status(401).json({ message: 'Invalid Credentials' });
-                        }
-                    })
-            }
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = generateToken(user);
                 res.status(200).json({
@@ -71,7 +46,7 @@ router.post('/login', (req, res) => {
 function generateToken (user) {
     const payload = {
         username: user.username,
-        isOperator: user.isOperator
+        is_operator: user.is_operator
     };
     const options = {
         expiresIn: '1d',

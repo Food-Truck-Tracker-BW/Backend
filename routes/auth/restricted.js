@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secrets = require('../config/secrets.js');
+const secrets = require('../../config/secrets.js');
 
 module.exports = {
     restricted,
@@ -15,7 +15,7 @@ function restricted (req, res, next) {
                 res.status(401).json({ message: 'Bad React Devs!' });
             } else {
                 req.username = decodedToken.username;
-                req.isOperator = decodedToken.isOperator;
+                req.is_operator = decodedToken.is_operator;
                 next();
             }
         })
@@ -33,8 +33,8 @@ function restrictedOperator (req, res, next) {
                 res.status(401).json({ message: 'Bad React Devs!' });
             } else {
                 req.username = decodedToken.username;
-                req.isOperator = decodedToken.isOperator;
-                if (req.isOperator) {
+                req.is_operator = decodedToken.is_operator;
+                if (req.is_operator) {
                     next();
                 } else res.status(401).json({ message: 'Not logged in as an operator!' })
             }

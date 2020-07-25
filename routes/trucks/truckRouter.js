@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Trucks = require('./dinerModel.js');
+const Trucks = require('./truckModel.js');
 const restricted = require('../auth/restricted.js');
 
 //gets
@@ -31,6 +31,30 @@ router.get('/:id/location', validateId, (req, res) => {
         })
         .catch(err => res.send(err));
 });
+
+router.get('/:id/avgRatings', validateId, (req, res) => {
+    Trucks.getAvgRating(req.params.id)
+        .then(rating => {
+            res.status(200).json({ rating: rating });
+        })
+        .catch(err => res.send(err))
+})
+
+router.get('/menu/:itemId', validateId, (req, res) => {
+    Trucks.getItem(req.params.itemId)
+        .then(item => {
+            res.status(200).json({ item: item });
+        })
+        .catch(err => res.send(err))
+})
+
+router.get('/menu/:itemId/itemAvgRatings', validateId, (req, res) => {
+    Trucks.getItemAvgRating(req.params.itemId)
+        .then(rating => {
+            res.status(200).json({ rating: rating });
+        })
+        .catch(err => res.send(err))
+})
 
 //post 
 router.post('/:id/addMenuItem', restricted.restrictedOperator, validateId, validateMenuItems, (req, res) => {

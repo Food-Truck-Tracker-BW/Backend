@@ -14,6 +14,9 @@ module.exports = {
     removeTruck,
     findWithinRad,
     findByCuisine,
+    getAvgRatings,
+    getItemAvgRatings,
+    getItem
 };
 
 function find () {
@@ -25,7 +28,7 @@ function findBy (filter) {
 }
 
 async function add (user) {
-    const [id] = await db('trucks').insert(user);
+    const [id] = await db('trucks').insert(user, 'id');
 
     return findById(id);
 }
@@ -40,7 +43,7 @@ function findMenus (id) {
     return db('menus').where({ truck_id: id })
 }
 
-function addMenuItem (item) {
+async function addMenuItem (item) {
     const [id] = await db('menus').insert(item, 'id')
     // return findMenus(truckId);
 }
@@ -85,7 +88,24 @@ function findWithinRad (lat, lng, rad) {
     //rad = meters
 }
 
-function findByCuisine (cuisine) {
-    return db('trucks').where({ cuisine })
+function findByCuisine (cuisine_type) {
+    return db('trucks').where({ cuisine_type })
 }
 
+async function getAvgRatings (id) {
+    const ratings = db('truck_ratings')
+        .where('truck_id', id)
+    return ratings.reduce((a, b) => (a + b)) / ratings.length;
+}
+
+function getItem (id) {
+    return db('menus')
+        .where({ id })
+        .first()
+}
+
+async function getItemAvgRatings (id) {
+    const ratings = await db('menu_item_ratings')
+        .where('menu_id', id)
+    return ratings.reduce((a, b) => (a + b)) / ratings.length;
+}

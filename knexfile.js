@@ -6,7 +6,7 @@ const localPg = {
 };
 
 const pgUser = process.env.PG_USER || 'postgres';
-const pgDb = process.env.PG_DB || 'foodTruckTracker';
+const pgDb = process.env.PG_DB || 'testdb';
 const testDb = 'ftt-test';
 
 const prodConnection = `postgres://${pgUser}:pjwise@localhost/${pgDb}`;

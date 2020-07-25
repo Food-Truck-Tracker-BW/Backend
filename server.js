@@ -1,13 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-// const apiRoutes = require('./routes/apiRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 const server = express();
 
 server.use(express.json());
 server.use(cors());
 
-// server.use('/api', apiRoutes);
+server.use('/api', apiRoutes);
 
 server.get('/', (req, res) => {
     res.send('The food truck tracker API works!');

@@ -8,42 +8,46 @@ module.exports = {
     addTruck,
     findTrucksById,
     removeOperator,
+    findDinerOrOperators
 };
 
 function find () {
-    return db('operators').select('id', 'username', 'password');
+    return db('users').select('id', 'username', 'password');
 }
 
 function findBy (filter) {
-    return db('operators').where(filter);
+    return db('users').where(filter);
+}
+
+function findDinerOrOperators (is_operator) {
+    return db('users').where({ is_operator })
 }
 
 async function add (user) {
-    const [id] = await db('operators').insert(user);
+    const [id] = await db('users').insert(user, 'id')
 
     return findById(id);
 }
 
 function findById (id) {
-    return db('operators')
+    return db('users')
         .where({ id })
         .first();
 }
 
 function findTrucksById (id) {
     return db('trucks')
-        .where({ id })
-        .first();
+        .where('operator_id', id)
 }
 
-function addTruck (truck) {
+async function addTruck (truck, operatorId) {
     const [id] = await db('trucks').insert(truck, 'id');
-    return findTrucksById(id);
+    return findTrucksById(operatorId);
 }
 
 async function removeOperator (id) {
     let operator = await findById(id)
-    return db('operators').where({ id })
+    return db('users').where({ id })
         .del()
         .then(res => {
             if (res) {

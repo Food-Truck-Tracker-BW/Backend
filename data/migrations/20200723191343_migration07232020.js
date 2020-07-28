@@ -15,6 +15,7 @@ exports.up = function (knex) {
         .createTable('trucks', trucks => {
             trucks.increments();
 
+            trucks.string('name').notNullable();
             trucks.string('image').notNullable();
             trucks.string('cuisine_type', 128).notNullable();
 
@@ -37,7 +38,7 @@ exports.up = function (knex) {
             menus.string('item_name', 128).notNullable();
             menus.text('item_description').notNullable();
             menus.string('item_image').notNullable();
-            menus.integer('item_price').notNullable();
+            menus.string('item_price').notNullable();
 
             menus.integer('truck_id').references('id').inTable('trucks').notNullable();
         })

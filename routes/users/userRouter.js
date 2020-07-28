@@ -39,14 +39,14 @@ router.get('/:id/trucks', restricted.restricted, validateId, (req, res) => {
         .catch(err => res.status(500).json({ message: 'Failed doing get' }))
 })
 
-// router.post('/:id/trucks', restricted.restricteduser, validateId, validateTruck, (req, res) => {
-//     req.body.customerRating = req.body.customerRatings.reduce((a, b) => (a + b)) / req.body.customerRatings.length;
-//     Users.addTruck(req.body, req.params.id)
-//         .then(trucks => {
-//             res.json({ trucks: trucks })
-//         })
-//         .catch(err => res.status(500).json({ message: 'failed to add trucks', err: err }))
-// })
+router.post('/:id/trucks', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
+    // req.body.customerRating = req.body.customerRatings.reduce((a, b) => (a + b)) / req.body.customerRatings.length;
+    Users.addTruck(req.body, req.params.id)
+        .then(trucks => {
+            res.json({ trucks: trucks })
+        })
+        .catch(err => res.status(500).json({ message: 'failed to add trucks', err: err }))
+})
 
 router.delete('/:id', restricted.restricted, validateId, (req, res) => {
     Users.removeuser(req.params.id)
@@ -69,37 +69,37 @@ function validateId (req, res, next) {
         .catch(err => res.status(500).json({ message: 'failed to find user' }))
 }
 
-// function validateTruck (req, res, next) {
-//     if (!req.body) {
-//         res.status(400).json({ message: 'Missing truck body' })
-//     }
-//     let truck = req.body
+function validateTruck (req, res, next) {
+    if (!req.body) {
+        res.status(400).json({ message: 'Missing truck body' })
+    }
+    let truck = req.body
 
-//     if (!truck.name) {
-//         res.status(400).json({ message: 'Missing truck name' })
-//     }
+    if (!truck.name) {
+        res.status(400).json({ message: 'Missing truck name' })
+    }
 
-//     if (!truck.imageOfTruck) {
-//         res.status(400).json({ message: 'Missing truck image' })
-//     }
+    if (!truck.imageOfTruck) {
+        res.status(400).json({ message: 'Missing truck image' })
+    }
 
-//     if (!truck.cuisineType) {
-//         res.status(400).json({ message: 'Missing cuisine type' })
-//     }
+    if (!truck.cuisineType) {
+        res.status(400).json({ message: 'Missing cuisine type' })
+    }
 
-//     if (!truck.customerRatings && truck.customerRatings.length < 1) {
-//         res.status(400).json({ message: 'Missing customer ratings' })
-//     }
+    // if (!truck.customerRatings && truck.customerRatings.length < 1) {
+    //     res.status(400).json({ message: 'Missing customer ratings' })
+    // }
 
-//     if (!truck.location) {
-//         res.status(400).json({ message: 'Missing truck location' })
-//     }
+    if (!truck.location) {
+        res.status(400).json({ message: 'Missing truck location' })
+    }
 
-//     if (!truck.departureTime) {
-//         res.status(400).json({ message: 'Missing truck departure time' })
-//     }
+    if (!truck.departureTime) {
+        res.status(400).json({ message: 'Missing truck departure time' })
+    }
 
-//     next();
-// }
+    next();
+}
 
 module.exports = router;

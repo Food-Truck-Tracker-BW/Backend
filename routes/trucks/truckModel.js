@@ -20,7 +20,7 @@ module.exports = {
 };
 
 function find () {
-    return db('trucks');
+    return db('trucks').select('*');
 }
 
 function findBy (filter) {

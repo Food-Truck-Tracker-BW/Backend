@@ -57,6 +57,15 @@ router.get('/menu/:itemId/itemAvgRatings', validateId, (req, res) => {
 })
 
 //post 
+
+router.post('/:id', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
+    Trucks.addMenu(req.body, req.params.id)
+        .then(menu => {
+            res.status(201).json({ menu: menu })
+        })
+        .catch(err => res.send(err))
+});
+
 router.post('/:id/addMenuItem', restricted.restrictedOperator, validateId, validateMenuItems, (req, res) => {
     Trucks.addMenu(req.body, req.params.id)
         .then(menu => {

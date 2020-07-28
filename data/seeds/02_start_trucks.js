@@ -5,7 +5,7 @@ const db = knex({
   client: 'postgres'
 });
 
-// install postgis functions in knex.postgis;
+// install postgis functions that are in knex.postgis;
 const st = knexPostgis(db);
 
 exports.seed = function (knex) {

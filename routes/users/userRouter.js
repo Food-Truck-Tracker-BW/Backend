@@ -79,7 +79,7 @@ function validateTruck (req, res, next) {
         res.status(400).json({ message: 'Missing truck name' })
     }
 
-    if (!truck.imageOfTruck) {
+    if (!truck.image) {
         res.status(400).json({ message: 'Missing truck image' })
     }
 

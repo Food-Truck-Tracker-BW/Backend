@@ -40,9 +40,9 @@ function findTrucksById (id) {
         .where('operator_id', id)
 }
 
-async function addTruck (truck, operatorId) {
+async function addTruck (truck, operator_id) {
     const [id] = await db('trucks').insert(truck, 'id');
-    return findTrucksById(operatorId);
+    return findTrucksById(operator_id);
 }
 
 async function removeUser (id) {

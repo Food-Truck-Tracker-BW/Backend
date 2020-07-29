@@ -48,6 +48,12 @@ GET USER BY ID:
 GET ALL TRUCKS OWNED BY USER:
 api/user/:id/trucks
 __________________________________________________________
+USERS(POST):
+
+ADD TRUCK: 
+
+
+__________________________________________________________
 
 TRUCKS(GET):
 

@@ -80,9 +80,9 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTable('truck_ratings')
-        .dropTable('menu_item_ratings')
-        .dropTable('menus')
-        .dropTable('trucks')
-        .dropTable('users')
+        .dropTableIfExists('truck_ratings')
+        .dropTableIfExists('menu_item_ratings')
+        .dropTableIfExists('menus')
+        .dropTableIfExists('trucks')
+        .dropTableIfExists('users')
 };

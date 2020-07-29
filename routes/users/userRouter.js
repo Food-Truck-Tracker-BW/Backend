@@ -49,7 +49,7 @@ router.post('/:id/trucks', restricted.restrictedOperator, validateId, validateTr
 })
 
 router.delete('/:id', restricted.restricted, validateId, (req, res) => {
-    Users.removeuser(req.params.id)
+    Users.removeUser(req.params.id)
         .then(user => {
             if (user) {
                 res.status(200).json({ user: user })
@@ -83,7 +83,7 @@ function validateTruck (req, res, next) {
         res.status(400).json({ message: 'Missing truck image' })
     }
 
-    if (!truck.cuisineType) {
+    if (!truck.cuisine_type) {
         res.status(400).json({ message: 'Missing cuisine type' })
     }
 
@@ -95,7 +95,7 @@ function validateTruck (req, res, next) {
         res.status(400).json({ message: 'Missing truck location' })
     }
 
-    if (!truck.departureTime) {
+    if (!truck.departure) {
         res.status(400).json({ message: 'Missing truck departure time' })
     }
 

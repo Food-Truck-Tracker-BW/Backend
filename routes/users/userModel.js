@@ -7,7 +7,7 @@ module.exports = {
     findById,
     addTruck,
     findTrucksById,
-    removeOperator,
+    removeUser,
     findDinerOrOperators
 };
 
@@ -45,13 +45,13 @@ async function addTruck (truck, operatorId) {
     return findTrucksById(operatorId);
 }
 
-async function removeOperator (id) {
-    let operator = await findById(id)
+async function removeUser (id) {
+    let user = await findById(id)
     return db('users').where({ id })
         .del()
         .then(res => {
             if (res) {
-                return operator
+                return user
             } else return null;
         })
 }

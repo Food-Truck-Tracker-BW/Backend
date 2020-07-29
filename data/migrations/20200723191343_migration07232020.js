@@ -22,13 +22,13 @@ exports.up = function (knex) {
             trucks.specificType('location', 'geometry(point, 4326)').notNullable();
 
             trucks.string('departure', 128);
-            trucks.integer('operator_id').references('id').inTable('users').notNullable();
+            trucks.integer('operator_id').references('id').inTable('users').notNullable().onUpdate('CASCADE').onDelete('CASCADE');
         })
 
         .createTable('truck_ratings', trs => {
             trs.increments();
 
-            trs.integer('truck_id').references('id').inTable('trucks').notNullable();
+            trs.integer('truck_id').references('id').inTable('trucks').notNullable().onUpdate('CASCADE').onDelete('CASCADE');
             trs.integer('rating').notNullable();
         })
 
@@ -40,13 +40,13 @@ exports.up = function (knex) {
             menus.string('item_image').notNullable();
             menus.string('item_price').notNullable();
 
-            menus.integer('truck_id').references('id').inTable('trucks').notNullable();
+            menus.integer('truck_id').references('id').inTable('trucks').notNullable().onUpdate('CASCADE').onDelete('CASCADE');
         })
 
         .createTable('menu_item_ratings', mi => {
             mi.increments();
 
-            mi.integer('menu_id').references('id').inTable('menus').notNullable();
+            mi.integer('menu_id').references('id').inTable('menus').notNullable().onUpdate('CASCADE').onDelete('CASCADE');
             mi.integer('rating').notNullable();
         })
 

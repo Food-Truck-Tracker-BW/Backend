@@ -47,7 +47,7 @@ router.get('/:id/trucks', restricted.restricted, validateId, (req, res) => {
 router.post('/:id/trucks', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
     req.body.location = st.geomFromText(`POINT(${req.body.location.long} ${req.body.location.lat})`, 4326)
     req.body.operator_id = req.params.id
-    Users.addTruck(req.params.id)
+    Users.addTruck(req.body, req.params.id)
         .then(trucks => {
             res.json({ trucks: trucks })
         })

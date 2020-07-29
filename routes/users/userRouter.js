@@ -3,6 +3,8 @@ const router = require('express').Router();
 const Users = require('./userModel.js');
 const restricted = require('../auth/restricted.js');
 
+const db = require('../../data/dbConfig.js');
+
 const knexPostgis = require('knex-postgis');
 const st = knexPostgis(db);
 
@@ -44,7 +46,7 @@ router.get('/:id/trucks', restricted.restricted, validateId, (req, res) => {
 
 router.post('/:id/trucks', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
     req.body.location = st.geomFromText(`POINT(${req.body.location.long} ${req.body.location.lat})`, 4326)
-    Users.addTruck(req.body, req.params.id)
+    Users.addTruck(req.params.id)
         .then(trucks => {
             res.json({ trucks: trucks })
         })

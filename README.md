@@ -47,11 +47,26 @@ GET USER BY ID:
 
 GET ALL TRUCKS OWNED BY USER:
 api/user/:id/trucks
-__________________________________________________________
-USERS(POST):
+
+(POST):
 
 ADD TRUCK: 
 
+/api/user/:id/trucks
+
+{
+	"name": string,
+	"image": string",
+	"cuisine_type": string,
+	"location": {"long": string (EXAMPLE: "27.255710"), "lat": string (EXAMPLE: "-80.200195")},
+	"departure": "HH:MM:SS"
+}
+
+(DELETE):
+
+DELETE USER:
+
+/api/user/:id
 
 __________________________________________________________
 
@@ -77,4 +92,36 @@ GET MENU ITEM:
 
 GET MENU ITEM RATING:
 /api/truck/menu/:itemId/itemAvgRatings
+
+(POST):
+
+POST MENU ITEM(S):
+/api/truck/:id
+
+[
+    { item_name: string, item_description: string, item_image: string(link), item_price: string, truck_id: integer },
+    { item_name: string, item_description: string, item_image: string(link), item_price: string, truck_id: integer }
+]
+
+(PUT):
+
+UPDATE TRUCK:
+
+/api/truck/:id
+
+{
+	"name": string,
+	"image": string",
+	"cuisine_type": string,
+	"location": {"long": string (EXAMPLE: "27.255710"), "lat": string (EXAMPLE: "-80.200195")},
+	"departure": "HH:MM:SS"
+}
+
+(DELETE):
+
+/api/truck/:id
+
+
+
+
 

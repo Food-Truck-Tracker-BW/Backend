@@ -58,7 +58,7 @@ router.get('/menu/:itemId/itemAvgRatings', validateId, (req, res) => {
 
 //post 
 
-router.post('/:id', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
+router.post('/:id', restricted.restrictedOperator, validateId, (req, res) => {
     Trucks.addMenu(req.body, req.params.id)
         .then(menu => {
             res.status(201).json({ menu: menu })
@@ -66,13 +66,13 @@ router.post('/:id', restricted.restrictedOperator, validateId, validateTruck, (r
         .catch(err => res.send(err))
 });
 
-router.post('/:id/addMenuItem', restricted.restrictedOperator, validateId, validateMenuItems, (req, res) => {
-    Trucks.addMenu(req.body, req.params.id)
-        .then(menu => {
-            res.status(201).json({ menu: menu })
-        })
-        .catch(err => res.send(err))
-});
+// router.post('/:id/addMenuItem', restricted.restrictedOperator, validateId, validateMenuItems, (req, res) => {
+//     Trucks.addMenuItem(req.body, req.params.id)
+//         .then(menu => {
+//             res.status(201).json({ menu: menu })
+//         })
+//         .catch(err => res.send(err))
+// });
 
 //put
 router.put('/:id', restricted.restrictedOperator, validateId, validateTruck, (req, res) => {
@@ -110,23 +110,23 @@ function validateMenuItems (req, res, next) {
     }
 
     req.body.foreach(item => {
-        if (!item.itemName) {
+        if (!item.item_name) {
             res.status(400).json({ message: 'Missing item name' })
         }
 
-        if (!item.itemDescription) {
+        if (!item.item_description) {
             res.status(400).json({ message: 'Missing item description' })
         }
 
-        if (!item.itemPhotos) {
+        if (!item.item_photos) {
             res.status(400).json({ message: 'Missing item photos in menu' })
         }
 
-        if (item.itemPrice !== undefined) {
+        if (item.item_price !== undefined) {
             res.status(400).json({ message: 'Missing item price' })
         }
 
-        if (!item.customerRatings) {
+        if (!item.customer_ratings) {
             res.status(400).json({ message: 'Missing customer ratings' })
         }
     })
@@ -144,23 +144,23 @@ function validateTruck (req, res, next) {
         res.status(400).json({ message: 'Missing truck name' })
     }
 
-    if (!truck.imageOfTruck) {
+    if (!truck.image) {
         res.status(400).json({ message: 'Missing truck image' })
     }
 
-    if (!truck.cuisineType) {
+    if (!truck.cuisine_type) {
         res.status(400).json({ message: 'Missing cuisine type' })
     }
 
-    if (!truck.customerRatings && truck.customerRatings.length < 1) {
-        res.status(400).json({ message: 'Missing customer ratings' })
-    }
+    // if (!truck.customerRatings && truck.customerRatings.length < 1) {
+    //     res.status(400).json({ message: 'Missing customer ratings' })
+    // }
 
     if (!truck.location) {
         res.status(400).json({ message: 'Missing truck location' })
     }
 
-    if (!truck.departureTime) {
+    if (!truck.departure) {
         res.status(400).json({ message: 'Missing truck departure time' })
     }
 

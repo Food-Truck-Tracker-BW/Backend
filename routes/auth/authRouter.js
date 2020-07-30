@@ -9,9 +9,9 @@ const e = require('express');
 
 router.post('/register', validateUser, (req, res) => {
     let user = req.body;
+    user.token = generateToken(user);
     const hash = bcrypt.hashSync(user.password, 14);
     user.password = hash;
-    user.token = generateToken(user);
 
     Users.add(user)
         .then(saved => {

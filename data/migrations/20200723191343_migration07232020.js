@@ -9,7 +9,6 @@ exports.up = function (knex) {
         users.string('email', 128).notNullable();
         users.string('password', 128).notNullable();
         users.boolean('is_operator').notNullable();
-        users.string('token').notNullable();
     })
 
         .createTable('trucks', trucks => {

@@ -9,13 +9,17 @@ const e = require('express');
 
 router.post('/register', validateUser, (req, res) => {
     let user = req.body;
-    user.token = generateToken(user);
+    const token = generateToken(user);
     const hash = bcrypt.hashSync(user.password, 14);
     user.password = hash;
 
     Users.add(user)
         .then(saved => {
-            res.status(201).json(saved);
+            res.status(201).json({
+                username: saved.username,
+                is_operator: saved.is_operator,
+                token
+            });
         })
         .catch(error => {
             res.status(500).json(error);
